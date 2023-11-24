@@ -4,6 +4,7 @@ import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import EventList from '@/components/molecules/EventList';
 
 const Home = () => {
 
@@ -53,6 +54,7 @@ const Home = () => {
         console.log('token removed')
         router.push('/register');
       }}>Logout</button>
+      <EventList />
     </div>
   )
 
