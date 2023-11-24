@@ -110,7 +110,7 @@ const RegisterForm = () => {
 
                 <div className="bottom-fields">
                     <LargeButton _label="Sign Up -->" _type="submit" />
-                    <h3 onClick={() => router.push('/register/login')}><u>I already have an account {"->"}</u></h3>
+                    <h3 onClick={() => router.push('/login')}><u>I already have an account {"->"}</u></h3>
                 </div>
             </form>
         </div>
