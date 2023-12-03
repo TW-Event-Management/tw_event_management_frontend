@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import EventList from '@/components/molecules/EventList';
+import './navbar.css';
 
 const Home = () => {
 
@@ -45,15 +46,22 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Home</h1>
-      <p>Hello {firstName}</p>
-      <p>Admin: {isAdmin ? 'Yes' : 'No'}</p>
-      <p>Mail: {mail}</p>
-      <button onClick={() => {
-        localStorage.removeItem('token');
-        console.log('token removed')
-        router.push('/register');
-      }}>Logout</button>
+      <div className='headerr'>
+        <input type='checkbox' name='' id='chk1'></input>
+        <div className='logo'><h5>GloEvent</h5></div>
+        <div className='search-box'>
+          <form action=''>
+            <input type='text' name='search' id='srch' placeholder='Search'></input>
+            <button type='submit'><i className=''></i></button>
+          </form>
+        </div>
+        <ul>
+          <li><a href='#'>Home</a></li>
+          <li><button className='notification-btn'>
+        </button></li>
+        <li><a href='#'>Profile</a></li>
+        </ul>
+      </div>
       <EventList />
     </div>
   )

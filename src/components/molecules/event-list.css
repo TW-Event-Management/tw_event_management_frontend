@@ -1,0 +1,83 @@
+.events-body {
+    width: 60%;
+    border: 2px solid red;
+}
+
+.eventnmap {
+    display: flex;
+    margin-top: 175px;
+}
+
+.map-body {
+    width: 40%;
+    border: 2px solid green;
+}
+
+.event-card {
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+    overflow: hidden; /* Prevent text overflow */
+    transition: transform 0.3s ease; /* Add a smooth transition effect on transform */
+    cursor: pointer;
+    background-color: #FFFFFF;
+    border: 2px solid #3498db;
+}
+
+.event-header {
+    background-color: #3498db;
+    height: 100%; /* Ensure the h2 fills the full height of the parent */
+}
+
+.event-card h2 {
+    color: #fff; /* White text color, you can adjust this */
+    font-size: 1.5em; /* Adjust the font size */
+    padding-bottom: 5px; /* Adjust the padding as needed */
+    padding: 15px;
+}
+
+.event-details {
+    margin-top: 10px;
+    color: black; 
+    font-size: 1.2em; 
+    background-color: #FFFFFF;
+    padding: 15px;
+}
+
+/* Add a lift effect on hover */
+.event-card:hover {
+    transform: translateY(-5px); /* Adjust the lifting distance as needed */
+}
+
+.event-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Darker semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }  
+  
+  .event-modal {
+    background: #fff;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%; /* Adjust the width as needed */
+    max-height: 90%; /* Adjust the height as needed */
+    overflow: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  .event-modal button {
+    margin-top: 10px; 
+  }
+
+
