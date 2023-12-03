@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import axios from 'axios';
@@ -8,12 +8,20 @@ import EventList from '@/components/molecules/EventList';
 import './navbar.css';
 
 const Home = () => {
-
   const router = useRouter();
 
   const [mail, setMail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Move state declaration here
+
+  const handleCreateClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const checkToken = async () => {
@@ -33,39 +41,46 @@ const Home = () => {
           setFirstName(response.data.user.firstName);
           setIsAdmin(response.data.user.admin);
           setMail(response.data.user.email);
-
         } catch (error) {
           console.error(error);
         }
       }
     };
 
-
     checkToken();
   }, []);
 
   return (
     <div>
-      <div className='headerr'>
-        <input type='checkbox' name='' id='chk1'></input>
-        <div className='logo'><h5>GloEvent</h5></div>
-        <div className='search-box'>
-          <form action=''>
-            <input type='text' name='search' id='srch' placeholder='Search'></input>
-            <button type='submit'><i className=''></i></button>
-          </form>
+      <div className='navbar'>
+        <div className='left'>
+          <h1 className='events-title'>Events</h1>
         </div>
-        <ul>
-          <li><a href='#'>Home</a></li>
-          <li><button className='notification-btn'>
-        </button></li>
-        <li><a href='#'>Profile</a></li>
-        </ul>
+        <div className='right'>
+          <ul>
+            {isAdmin && <li className='admin-only' onClick={handleCreateClick}>Create</li>}
+            <li className='notification'>Notification</li>
+            <li>
+              <button className='profile-btn'><a href='#'></a></button>
+            </li>
+          </ul>
+        </div>
       </div>
-      <EventList />
-    </div>
-  )
+      <div className='content'>
+        <EventList />
+      </div>
 
-}
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            {/* Add your modal content here */}
+            <p>This is the modal content.</p>
+            <button onClick={handleCloseModal}>Close Modal</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Home;
