@@ -21,10 +21,8 @@ const Home = () => {
       console.log(token);
 
       if (!token) {
-        // redirect to RegisterPage if token doesn't exist
         router.push('/register');
       } else {
-        // verify user with token
         try {
           const response = await axios.post('http://localhost:3000/register/verify-token', {
             token: token,
@@ -59,7 +57,9 @@ const Home = () => {
           <li><a href='#'>Home</a></li>
           <li><button className='notification-btn'>
         </button></li>
-        <li><a href='#'>Profile</a></li>
+        <li>
+  <button onClick={() => router.push('/profile')}>Profile</button>
+</li>
         </ul>
       </div>
       <EventList />

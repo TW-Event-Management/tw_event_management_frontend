@@ -5,7 +5,7 @@ import Input from '@/components/atoms/Input';
 import LargeButton from "../atoms/LargeButton";
 import './molecules-style.css';
 
-const LoginForm = () => {
+const LoginForm = () => { 
     const router = useRouter();
 
     const [email, setEmail] = useState('');
@@ -28,7 +28,11 @@ const LoginForm = () => {
                 });
 
                 localStorage.setItem('token', response.data.token);
-                router.push('/');
+                localStorage.setItem('email', email);
+
+                router.push({
+                    pathname: '/',
+                });
             } catch (error) {
                 console.error(error);
                 setPasswordError('Incorrect mail or password.');
