@@ -11,6 +11,11 @@ const EventCard = ({ event }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
+  const date = new Date(event.date);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+
   const handleViewButtonClick = () => {
     setIsModalOpen(true);
   };
@@ -25,7 +30,7 @@ const EventCard = ({ event }) => {
         <div className="event-header">
           <h2>
             <span className="event-name">{event.name}</span><span className="event-location"> at {event.location}</span></h2>
-          <p className="event-time">Starting at: {event.date}</p>
+          <p className="event-time">Starting at: {formattedTime}</p>
         </div>
 
         <div className="event-button">

@@ -1,0 +1,105 @@
+.date-rectangle.active {
+    background-color: #f0f0f0;
+}
+
+/* .container {
+    display: grid;
+    grid-template-columns: auto 600px;
+    grid-template-rows: auto;
+    grid-column-gap: 160px;
+    margin: 0 auto;
+  }
+  
+
+  .event-list {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  } */
+
+  .date-preview {
+    position: relative;
+    width: 642px;
+    height: 69px;
+    margin: 0 auto;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border: 1px solid #DADADA;
+    background: #FFF;
+    box-shadow: 0px 4px 18px 1px rgba(0, 0, 0, 0.10);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+.leftButton,
+.rightButton {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: none
+}
+
+.leftButton {
+    left: -50px
+}
+
+.rightButton {
+    right: -50px
+}
+
+.leftButton:hover,
+.rightButton:hover {
+    background-color: #e2e2e2;
+    box-shadow: none
+}
+
+.date-buttons button {
+    padding: 4px8 px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+
+.date-preview {
+    width: 642px;
+    height: 69px;
+    margin: 0 auto;
+    flex-shrink: 0;
+    border-radius: 16x;
+    border: 1px solid#DADADA;
+    background: #FFF;
+    box-shadow: 0 px4 px18 px1 px rgba (0, 0, 0, 0.10);
+}
+
+.date-preview p {
+    font-family: Inter;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-align: center;
+    color: #BDBCBC;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width:768px) {
+    .date-preview {
+        width: 90%;
+        height: auto
+    }
+
+    .date-preview p {
+        font-size: 16px
+    }
+}
