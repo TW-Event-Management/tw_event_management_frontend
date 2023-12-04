@@ -134,6 +134,7 @@ const CreateEvent = () => {
         setLat(suggestion[2]);
         setLon(suggestion[1]);
 
+
         setSuggestionText(suggestion[0]); // Set suggestion text
 
         const marker = new mapboxgl.Marker({ element: markerElement }).setLngLat([parseFloat(suggestion[2]), parseFloat(suggestion[1])]).addTo(map.current);
@@ -170,8 +171,11 @@ const CreateEvent = () => {
                         }}
                         _placeholder={"Location"}
                         _value={suggestionText}
+                        className='input-style'
                     />
-                    <div className="search-btn" onClick={() => computeSuggestion(suggestionText)}>Find location</div>
+                    <button className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
+                        Find location
+                    </button>
                 </div>
 
                 <div className="map-container-modal">
