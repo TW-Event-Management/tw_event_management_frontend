@@ -2,9 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import './event-list.css';
+import MapRender from '@/components/atoms/MapRender'
 
 const EventCard = ({ event }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const router = useRouter();
+  const mapContainer = useRef(null);
+  const map = useRef(null);
 
   const handleViewButtonClick = () => {
     setIsModalOpen(true);
@@ -57,7 +62,7 @@ const EventModal = ({ selectedEvent, onClose }) => {
       </div>
     </div>
   );
-  
+
 };
 
 const EventList = () => {
@@ -68,39 +73,40 @@ const EventList = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleCardClick = (event) => {
-      setSelectedEvent(event);
+    setSelectedEvent(event);
   };
 
   const handleCloseModal = () => {
-      setSelectedEvent(null);
+    setSelectedEvent(null);
   };
 
   useEffect(() => {
-      const fetchEvents = async () => {
-          try {
-              const response = await axios.get('http://localhost:3000/events/get-all')
-              setEvents(response.data);
-          } catch (error) {
-              console.error('Error fetching events: ', error);
-          }
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/events/get-all')
+        setEvents(response.data);
+      } catch (error) {
+        console.error('Error fetching events: ', error);
       }
-      fetchEvents();
+    }
+    fetchEvents();
   }, []);
 
   return (
-      <div className="eventnmap">
-        <div className="events-body">
-          <ul>
-            {events.map((event) => (
-              <EventCard key={event.id} event={event} onCardClick={handleCardClick} />
-            ))}
-          </ul>
-        </div>
-        {selectedEvent && <EventModal selectedEvent={selectedEvent} onClose={handleCloseModal} />}
-        <div className="map-body">
-        </div>
+    <div className="eventnmap">
+      <div className="events-body">
+        <ul>
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} onCardClick={handleCardClick} />
+          ))}
+        </ul>
       </div>
-    );
+      {selectedEvent && <EventModal selectedEvent={selectedEvent} onClose={handleCloseModal} />}
+      <div className="map-body">
+        <MapRender />
+      </div>
+    </div>
+  );
 };
 
 export default EventList;
