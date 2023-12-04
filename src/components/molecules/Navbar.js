@@ -5,6 +5,9 @@ import axios from "axios";
 import "./navbar.css";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
+import "./CreateEventModal.css"
+
+import CreateEvent from "@/components/molecules/CreateEvent"
 
 const Navbar = ({ isAdmin: propIsAdmin }) => {
   const router = useRouter();
@@ -79,14 +82,15 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
       </div>
 
       {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            {/* Add your modal content here */}
-            <p>This is the modal content.</p>
-            <button onClick={handleCloseModal}>Close Modal</button>
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content">
+              <CreateEvent onClose={handleCloseModal} />
+            </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };
