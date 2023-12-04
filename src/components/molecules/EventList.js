@@ -62,6 +62,7 @@ const EventModal = ({ selectedEvent, onClose }) => {
           <p className="event-description">{selectedEvent.description}</p>
         </div>
         <div className="modal-footer">
+          <button className="participate-button">Participate</button>
           <button onClick={onClose} className="close-button">Close</button>
         </div>
       </div>

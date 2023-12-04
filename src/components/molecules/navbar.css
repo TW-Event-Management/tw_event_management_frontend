@@ -8,7 +8,7 @@
 
 .content {
     position: relative;
-    margin-top: 150px;
+    margin-top: 50px;
     padding: 20px;
     flex: 1;
     z-index: 5;
@@ -25,7 +25,7 @@
     margin-top: 25px; /* Add margin from the top */
 }
   
-.events-title {
+.title-event {
     font-size: 2.5rem; /* Adjust the font size for the 'Events' title */
     margin: 20px 0; /* Add more margin from the top */
 }
@@ -84,7 +84,7 @@
     color: #ff5733;
 }
 
-.events-title:hover{
+.title-event:hover{
     cursor: pointer;
     color: #ff5733;
     transition: background-color 0.3s, color 0.3s;

@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import './MapRender.css'; // Import the CSS file for styling
 
 const MapRender = () => {
     const mapContainer = useRef(null);
     const map = useRef(null);
 
     useEffect(() => {
-        console.log("map rendered");
         mapboxgl.accessToken = 'pk.eyJ1IjoiZGFyaXVzYWxiYSIsImEiOiJjbHBxNnVrbjYxNXd1MnJsZTh3ZXVkdDFpIn0._o92jCkoQrJDvOA8qvKo7g';
 
         if (!map.current) {
@@ -21,9 +21,29 @@ const MapRender = () => {
                 map.current.resize();
             });
         }
+
+        const handleScroll = () => {
+            const mapDiv = mapContainer.current;
+            const rect = mapDiv.getBoundingClientRect();
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+            if (scrollTop <= 300) {
+                // Scrolling up and above 250px
+                mapDiv.classList.remove('fixed-map');
+            } else if (rect.top <= 190) {
+                // Scrolling down
+                mapDiv.classList.add('fixed-map');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
-    return <div ref={mapContainer} className="map" style={{ height: "700px" }} />;
+    return <div ref={mapContainer} className="map" style={{ height: "550px", width: "700px" }} />;
 };
 
 export default MapRender;

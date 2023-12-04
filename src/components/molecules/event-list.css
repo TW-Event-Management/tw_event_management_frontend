@@ -2,6 +2,7 @@
 
 .eventnmap {
     display: flex;
+    margin-top: 100px;
 }
 
 .events-body {
@@ -34,6 +35,11 @@
     border: 1px solid rgb(205, 205, 205);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
     font-size: larger;
+    transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+}
+
+.event-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8); /* Change shadow on hover */
 }
 
 .event-header {
@@ -62,7 +68,7 @@
     display: flex;
     justify-content: flex-end;
 }
-  
+
 .view-button {
     background-color: #000;
     color: #fff;
@@ -120,9 +126,10 @@
 }
   
 .modal-footer {
-    text-align: center;
-    margin-top: auto; /* Adjust spacing between content and button */
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   
 .close-button {
     background: none;
@@ -136,9 +143,26 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, color 0.3s;
 }
-  
+
 .close-button:hover {
     color:#ff5733;
+}
+
+.participate-button{
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px; /* Add some border radius for a softer look */
+    padding: 10px 20px; /* Add padding for better appearance */
+    background-color: green;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.participate-button:hover {
+    color: #ff5733;
 }
 
 .event-modal h2 {

@@ -55,7 +55,7 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
       <div className="navbar">
         <div className="left">
           <Link href="/" style={{ color: 'black', textDecoration: 'none' }}>
-            <h1 className="events-title">Events</h1>
+            <h1 className="title-event">Events</h1>
           </Link>
         </div>
         <div className="right">
