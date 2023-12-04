@@ -27,11 +27,6 @@ const RegisterForm = () => {
         setEmailError('');
         setPasswordError('');
     
-        console.log('firstName:', firstName);
-        console.log('lastName:', lastName);
-        console.log('email:', email);
-        console.log('password:', password);
-    
         // check if all fields are completed
         if (firstName.trim() && lastName.trim() && email.trim() && password.trim()) {
             try {

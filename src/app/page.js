@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import EventList from '@/components/molecules/EventList';
-import Navbar from '@/components/molecules/Navbar';
+import Navbar from '../components/molecules/Navbar';
 
 const Home = () => {
   const router = useRouter();
@@ -17,7 +17,6 @@ const Home = () => {
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem('token');
-      console.log(token);
 
       if (!token) {
         // redirect to RegisterPage if token doesn't exist
