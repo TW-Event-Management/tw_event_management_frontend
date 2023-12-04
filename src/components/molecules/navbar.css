@@ -18,59 +18,67 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+}
   
-  .left {
+.left {
     margin-left: 30px; /* Adjust the margin from the left */
     margin-top: 25px; /* Add margin from the top */
-  }
+}
   
-  .events-title {
-    font-size: 32px; /* Adjust the font size for the 'Events' title */
+.events-title {
+    font-size: 2.5rem; /* Adjust the font size for the 'Events' title */
     margin: 20px 0; /* Add more margin from the top */
-  }
+}
   
-  .right {
+.right {
     border: 1px solid #ccc; /* Add borders to the right side */
     border-radius: 10px; /* Add round corners */
-    padding: 10px; /* Add more padding for better appearance */
+    padding: 20px; /* Add more padding for better appearance */
     margin-top: 25px; /* Add more space from the top */
     margin-right: 30px; /* Add more space from the right */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  }
+}
   
-  .right ul {
+.right ul {
     list-style: none;
     display: flex;
     align-items: center;
-  }
+}
   
-  .right li {
-    margin-left: 10px;
-  }
+.right li {
+    margin-left: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
   
-  .admin-only {
+.right li:first-child {
+    margin-left: 20px;
+}
+
+.right li:last-child {
+    margin-right: 20px;
+}
+
+.admin-only {
     display: block;
-  }
+}
 
-  .admin-only:hover{
+.admin-only:hover{
     cursor: pointer;
     color: #ff5733;
-  }
+}
 
-  .notification:hover{
+.notification:hover{
     cursor: pointer;
     color: #ff5733;
-  }
+}
   
-  .profile-btn {
-    width: 30px;
-    height: 30px;
+.profile-btn {
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     border: 1px solid #ccc;
     background-color: greenyellow; 
     cursor: pointer;
-  }
-  
-  /* Add any additional styling as needed */
-  
+}
+    
