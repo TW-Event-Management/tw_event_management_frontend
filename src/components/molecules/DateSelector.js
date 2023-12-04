@@ -30,12 +30,11 @@ const DateSelector = () => {
   return (
     <div className='container'>
       <div className="date-preview">
-        <button onClick={handlePreviousDay} className='leftButton'>&lt;--</button>
-        <p>{getPreviewDate(selectedDate, -2)}</p>
-        <p>{getPreviewDate(selectedDate, -1)}</p>
         <DateDisplay date={selectedDate} isActive={!transition} />
         <p>{getPreviewDate(selectedDate, 1)}</p>
         <p>{getPreviewDate(selectedDate, 2)}</p>
+        <p>{getPreviewDate(selectedDate, 4)}</p>
+        <p>{getPreviewDate(selectedDate, 5)}</p>
         <button onClick={handleNextDay} className='rightButton'>--&gt;</button>
       </div>
       <EventList selectedDate={selectedDate} />
