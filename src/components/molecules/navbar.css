@@ -51,7 +51,11 @@
     font-weight: bold;
     transition: background-color 0.3s, color 0.3s;
 }
-  
+
+.right li a{
+    transition: background-color 0.3s, color 0.3s;
+}
+
 .right li:first-child {
     margin-left: 20px;
 }
