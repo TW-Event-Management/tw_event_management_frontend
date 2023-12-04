@@ -1,20 +1,11 @@
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import ProfileForm from '@/components/molecules/ProfileForm';
-import './register-style.css';
+import React from "react";
+import { useRouter } from "next/navigation";
+import ProfileForm from "@/components/molecules/ProfileForm";
 
 const ProfilePage = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-    return(
-        <div className='main'>
-            <div className='left'>
-                <ProfileForm />
-            </div>
-            <div className='right'>
-            </div>
-        </div>
-    );
-}
+  return <ProfileForm />;
+};
 
 export default ProfilePage;

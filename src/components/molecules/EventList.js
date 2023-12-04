@@ -80,7 +80,6 @@ const EventList = () => {
           try {
               const response = await axios.get('http://localhost:3000/events/get-all')
               setEvents(response.data);
-              console.log(response.data);
           } catch (error) {
               console.error('Error fetching events: ', error);
           }

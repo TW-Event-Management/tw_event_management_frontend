@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import EventList from '@/components/molecules/EventList';
-import './navbar.css';
+import Navbar from '../components/molecules/Navbar';
 
 const Home = () => {
   const router = useRouter();
@@ -13,24 +13,16 @@ const Home = () => {
   const [mail, setMail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Move state declaration here
-
-  const handleCreateClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem('token');
-      console.log(token);
 
       if (!token) {
+        // redirect to RegisterPage if token doesn't exist
         router.push('/register');
       } else {
+        // verify user with token
         try {
           const response = await axios.post('http://localhost:3000/register/verify-token', {
             token: token,
@@ -50,33 +42,10 @@ const Home = () => {
 
   return (
     <div>
-      <div className='navbar'>
-        <div className='left'>
-          <h1 className='events-title'>Events</h1>
-        </div>
-        <div className='right'>
-          <ul>
-            {isAdmin && <li className='admin-only' onClick={handleCreateClick}>Create</li>}
-            <li className='notification'>Notification</li>
-            <li>
-              <button className='profile-btn'><a href='#'></a></button>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Navbar isAdmin={isAdmin}/>
       <div className='content'>
         <EventList />
       </div>
-
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            {/* Add your modal content here */}
-            <p>This is the modal content.</p>
-            <button onClick={handleCloseModal}>Close Modal</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
