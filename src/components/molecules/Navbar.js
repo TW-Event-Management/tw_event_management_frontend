@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./navbar.css";
 import { useRouter } from "next/navigation";
-import Link from 'next/link';
-import "./CreateEventModal.css"
+import Link from "next/link";
+import "./CreateEventModal.css";
 
-import CreateEvent from "@/components/molecules/CreateEvent"
+import CreateEvent from "@/components/molecules/CreateEvent";
 
 const Navbar = ({ isAdmin: propIsAdmin }) => {
   const router = useRouter();
@@ -15,12 +15,12 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
   const [isAdmin, setIsAdmin] = useState(propIsAdmin);
 
   const logout = () => {
-    const email = localStorage.getItem('email');
+    const email = localStorage.getItem("email");
     if (email) {
-      localStorage.removeItem('email');
-      router.push('/login');
+      localStorage.removeItem("email");
+      router.push("/login");
     }
-  }
+  };
 
   const handleCreateClick = () => {
     setIsModalOpen(true);
@@ -32,17 +32,20 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
 
   useEffect(() => {
     const checkToken = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
 
       if (!token) {
         // redirect to RegisterPage if token doesn't exist
-        router.push('/register');
+        router.push("/register");
       } else {
         // verify user with token
         try {
-          const response = await axios.post('http://localhost:3000/register/verify-token', {
-            token: token,
-          });
+          const response = await axios.post(
+            "http://localhost:3000/register/verify-token",
+            {
+              token: token,
+            }
+          );
           setIsAdmin(response.data.user.admin);
         } catch (error) {
           console.error(error);
@@ -57,7 +60,7 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
     <div>
       <div className="navbar">
         <div className="left">
-          <Link href="/" style={{ color: 'black', textDecoration: 'none' }}>
+          <Link href="/" style={{ color: "black", textDecoration: "none" }}>
             <h1 className="title-event">Events</h1>
           </Link>
         </div>
@@ -68,14 +71,19 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
                 Create
               </li>
             )}
-            <li className="notification">Notification</li>
-            <li>
-              <a className="profile"
-                onClick={() => router.push("/profile")}>Profile</a>
+            <li
+              className="notification"
+              onClick={() => router.push("/homepage")}
+            >
+              Notification
             </li>
             <li>
-              <button className="logout-btn" onClick={logout}>
-              </button>
+              <a className="profile" onClick={() => router.push("/profile")}>
+                Profile
+              </a>
+            </li>
+            <li>
+              <button className="logout-btn" onClick={logout}></button>
             </li>
           </ul>
         </div>
@@ -90,7 +98,6 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
