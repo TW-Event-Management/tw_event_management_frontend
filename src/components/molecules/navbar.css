@@ -49,6 +49,7 @@
     margin-left: 30px;
     font-size: 1.5rem;
     font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
 }
   
 .right li:first-child {
@@ -61,6 +62,7 @@
 
 .admin-only {
     display: block;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .admin-only:hover{
@@ -81,6 +83,7 @@
 .events-title:hover{
     cursor: pointer;
     color: #ff5733;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .logout-btn {
@@ -95,4 +98,5 @@
 .logout-btn:hover{
     background: url('logoutorange.png') no-repeat;
     background-size: 30px;
+    
 }
