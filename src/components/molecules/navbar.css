@@ -73,12 +73,26 @@
     color: #ff5733;
 }
   
-.profile-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background-color: greenyellow; 
+.profile:hover{
+    cursor: pointer;
+    color: #ff5733;
+}
+
+.events-title:hover{
+    cursor: pointer;
+    color: #ff5733;
+}
+
+.logout-btn {
+    width: 30px;
+    height: 30px;
+    background: url('logoutblack.png') no-repeat;
+    background-size: 30px;
+    border: none;
     cursor: pointer;
 }
-    
+
+.logout-btn:hover{
+    background: url('logoutorange.png') no-repeat;
+    background-size: 30px;
+}

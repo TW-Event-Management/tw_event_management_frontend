@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./navbar.css";
 import { useRouter } from "next/navigation";
 import "./p-form.css";
 import Navbar from "./Navbar";
