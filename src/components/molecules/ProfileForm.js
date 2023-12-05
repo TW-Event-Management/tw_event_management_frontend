@@ -24,7 +24,6 @@ const ProfileForm = () => {
             }
           );
           setIsAdmin(response.data.user.admin);
-          
         } catch (error) {
           console.error(error);
         }
@@ -101,7 +100,6 @@ const ProfileForm = () => {
           <div className="profile-section">
             <h1 className="profile-title">User Profile</h1>
             <p className="profile-info">Email: {storedEmail}</p>
-            <p className="profile-info">ID: {userInfo.id}</p>
             <p className="profile-info">First Name: {userInfo.firstName}</p>
             <p className="profile-info">Last Name: {userInfo.lastName}</p>
           </div>
@@ -112,7 +110,9 @@ const ProfileForm = () => {
               {userEvents.map((event) => (
                 <div key={event._id} className="event-card">
                   <h3 className="event-name">{event.name}</h3>
-                  <p className="event-organizer">Organizer: {event.organizer}</p>
+                  <p className="event-organizer">
+                    Organizer: {event.organizer}
+                  </p>
                   <p className="event-description">
                     Description: {event.description}
                   </p>

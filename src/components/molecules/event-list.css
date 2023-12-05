@@ -1,39 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap");
 
 .eventnmap {
-    display: flex;
-    margin-top: 100px;
+  display: flex;
+  margin-top: 100px;
 }
 
 .events-body {
-    width: 50%;
+  width: 50%;
 }
 
 .map-body {
-    width: 50%;
+  width: 50%;
 }
 
 .event-card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .event-card {
-    width: 80%;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    padding: 20px;    
-    margin: 16px;
-    background-color: #2e3233;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    border-radius: 16px;
-    border: 1px solid rgb(205, 205, 205);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-    font-size: larger;
-    transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px;
+  background-color: #2e3233;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 16px;
+  border: 1px solid rgb(205, 205, 205);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  font-size: larger;
+  transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
 }
 
 .event-card:hover {
@@ -41,146 +41,144 @@
 }
 
 .event-header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
-  
+
 .event-name {
-    font-size: 20px;
-    font-weight: bold;
-    color: #ff5733;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff5733;
 }
-  
+
 .event-location {
-    font-size: 16px;
-    color: whitesmoke;
+  font-size: 16px;
+  color: whitesmoke;
 }
-  
+
 .event-time {
-    font-size: 16px;
-    color: #000;
-    margin-top: 8px;
-    font-weight: bold;
+  font-size: 16px;
+  color: white;
+  margin-top: 8px;
+  font-weight: bold;
 }
-  
+
 .event-button {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .view-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 16px; /* Increased button size */
-    border-radius: 6px; /* Rounded corners for the button */
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    margin-top: 8px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 16px; /* Increased button size */
+  border-radius: 6px; /* Rounded corners for the button */
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin-top: 8px;
 }
-  
+
 .view-button:hover {
-    color: #ff5733;
+  color: #ff5733;
 }
 
 .event-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
-  
+
 .event-modal {
-    background: #fff;
-    color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 90%; /* Adjust the width as needed */
-    max-height: 90%; /* Adjust the height as needed */
-    overflow: auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    width: 500px; /* Set the width to 600px */
-    height: 500px; /* Set the height to 600px */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between
-}  
-  
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%; /* Adjust the width as needed */
+  max-height: 90%; /* Adjust the height as needed */
+  overflow: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 500px; /* Set the width to 600px */
+  height: 500px; /* Set the height to 600px */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-  
+
 .event-name {
-    margin: 0;
-    flex-grow: 1; /* Allow the event name to take up all available space */
-    text-align: center;
+  margin: 0;
+  flex-grow: 1; /* Allow the event name to take up all available space */
+  text-align: center;
 }
-  
+
 .modal-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .close-button {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px; /* Add some border radius for a softer look */
-    padding: 10px 20px; /* Add padding for better appearance */
-    background-color: #000;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px; /* Add some border radius for a softer look */
+  padding: 10px 20px; /* Add padding for better appearance */
+  background-color: #000;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .close-button:hover {
-    color:#ff5733;
+  color: #ff5733;
 }
 
-.participate-button{
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px; /* Add some border radius for a softer look */
-    padding: 10px 20px; /* Add padding for better appearance */
-    background-color: green;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s;
+.participate-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px; /* Add some border radius for a softer look */
+  padding: 10px 20px; /* Add padding for better appearance */
+  background-color: green;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .participate-button:hover {
-    color: #ff5733;
+  color: #ff5733;
 }
 
 .event-modal h2 {
-    margin: 0;
-    color: #ff5733;
+  margin: 0;
+  color: #ff5733;
 }
-  
+
 .modal-content {
-    margin-top: 20px;
+  margin-top: 20px;
 }
-  
+
 .event-info {
-    font-size: 18px;
-    margin: 0;
+  font-size: 18px;
+  margin: 0;
 }
-  
+
 .event-description {
-    font-size: 16px;
-    line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.5;
 }
-  
-  
