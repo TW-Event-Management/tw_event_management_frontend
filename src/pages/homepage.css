@@ -36,7 +36,7 @@ p {
   padding: 1em;
 }
 
-a {
+.register-redirect {
   display: inline-block;
   padding: 1em 3.5em;
   background-color: var(--color);
