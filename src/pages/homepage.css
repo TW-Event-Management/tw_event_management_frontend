@@ -25,15 +25,17 @@ body {
   background-attachment: fixed;
 }
 
-h1 {
+.h1-homepage {
   font-weight: 700;
+  color: white;
   font-size: 3rem;
 }
 
-p {
+.p-homepage {
   max-width: 52ch;
   line-height: 1.5;
   padding: 1em;
+  color: white;
 }
 
 .register-redirect {
@@ -54,6 +56,8 @@ p {
   width: 100%;
   min-height: 15vh;
   background-color: var(--color);
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 }
 
 .second {
@@ -62,14 +66,20 @@ p {
   height: 1200px;
 }
 
-h3 {
+.h3-homepage {
   font-weight: 700;
   font-size: 1.6rem;
+  color: white;
   margin-top: 1em;
 }
 
 .card > a {
   margin-bottom: 2em;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10%;
+  font-size: 22px;
+  text-decoration: none;
 }
 
 .item {
