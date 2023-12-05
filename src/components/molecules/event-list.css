@@ -25,12 +25,10 @@
     border-radius: 12px;
     padding: 20px;    
     margin: 16px;
-    background-color: #eeeded;
+    background-color: #2e3233;
     display: flex;
     flex-direction: column;
     gap: 20px;
-
-    background-color: rgb(234, 234, 239);
     border-radius: 16px;
     border: 1px solid rgb(205, 205, 205);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
@@ -55,13 +53,14 @@
   
 .event-location {
     font-size: 16px;
-    color: #333;
+    color: whitesmoke;
 }
   
 .event-time {
     font-size: 16px;
-    color: #555;
+    color: #000;
     margin-top: 8px;
+    font-weight: bold;
 }
   
 .event-button {

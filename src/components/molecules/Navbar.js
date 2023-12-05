@@ -6,6 +6,8 @@ import "./navbar.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "./CreateEventModal.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import CreateEvent from "@/components/molecules/CreateEvent";
 
@@ -18,7 +20,8 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
     const email = localStorage.getItem("email");
     if (email) {
       localStorage.removeItem("email");
-      router.push("/login");
+      localStorage.removeItem("token");
+      router.push("./homepage");
     }
   };
 
@@ -83,7 +86,7 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
               </a>
             </li>
             <li>
-              <button className="logout-btn" onClick={logout}></button>
+              <button className="logout-btn " onClick={logout}><FontAwesomeIcon icon={faSignOutAlt} /></button>
             </li>
           </ul>
         </div>

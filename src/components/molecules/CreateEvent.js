@@ -108,7 +108,7 @@ const CreateEvent = () => {
             );
             const suggestions = response.data.map((item) => [item.display_name, item.lat, item.lon]);
             let name = response.data[0].display_name.split(",")[0];
-
+            
             setLocationName(name);
             setSuggestions(suggestions);
         } catch (error) {
@@ -134,7 +134,6 @@ const CreateEvent = () => {
         setLat(suggestion[2]);
         setLon(suggestion[1]);
 
-
         setSuggestionText(suggestion[0]); // Set suggestion text
 
         const marker = new mapboxgl.Marker({ element: markerElement }).setLngLat([parseFloat(suggestion[2]), parseFloat(suggestion[1])]).addTo(map.current);
@@ -148,43 +147,98 @@ const CreateEvent = () => {
 
     return (
         <div className="create-event-form">
-            <h1>Create event</h1>
+            <h1>Create Event</h1>
             <form onSubmit={handleFormSubmit} className="create-ev-form">
                 <div className="mid-fields">
-                    <Input _onInputChange={(value) => setEventName(value)} _placeholder={"Event title"} />
-                    <Input _onInputChange={(value) => setDescription(value)} _placeholder={"Description"} />
-                    <Input _onInputChange={(value) => setOrganizer(value)} _placeholder={"Organizer"} />
-                    <div className="names">
-                        <Input _onInputChange={(value) => setDate(value)} _placeholder={"Date"} />
-                        <Input _onInputChange={(value) => setTime(value)} _placeholder={"Time"} />
+                    {/* Event Name */}
+                    <div className="form-group">
+                        <label htmlFor="eventName">Event Name</label>
+                        <Input
+                            id="eventName"
+                            _onInputChange={(value) => setEventName(value)}
+                            _placeholder={"Event title"}
+                        />
                     </div>
+
+                    {/* Description */}
+                    <div className="form-group">
+                        <label htmlFor="description">Description</label>
+                        <Input
+                            id="description"
+                            _onInputChange={(value) => setDescription(value)}
+                            _placeholder={"Description"}
+                        />
+                    </div>
+
+                    {/* Date and Time */}
+                    <div className="form-group">
+                        <div className="date-time-group">
+                            <label htmlFor="date">Date</label>
+                            <Input
+                                id="date"
+                                _onInputChange={(value) => setDate(value)}
+                                _placeholder={"Date"}
+                                type="date"
+                            />
+                        </div>
+                        <div className="date-time-group">
+                            <label htmlFor="time">Time</label>
+                            <Input
+                                id="time"
+                                _onInputChange={(value) => setTime(value)}
+                                _placeholder={"Time"}
+                                type="time"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Suggestions */}
                     <div className="suggestions">
-                        {
-                            suggestions.map((suggestion) => (
-                                suggestionText ? <div className="suggestion" key={suggestion[0]} onClick={() => clickSuggestion(suggestion)}>{suggestion[0]}</div> : ""
-                            ))
-                        }
+                        {suggestions.map((suggestion) => (
+                            suggestionText ? (
+                                <div
+                                    className="suggestion"
+                                    key={suggestion[0]}
+                                    onClick={() => clickSuggestion(suggestion)}
+                                >
+                                    {suggestion[0]}
+                                </div>
+                            ) : null
+                        ))}
                     </div>
-                    <Input
-                        _onInputChange={(value) => {
-                            setSuggestionText(value);
-                        }}
-                        _placeholder={"Location"}
-                        _value={suggestionText}
-                        className='input-style'
-                    />
-                    <button className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
-                        Find location
-                    </button>
+
+                    {/* Location input and search button */}
+                    <div className="form-group">
+                        <label htmlFor="location">Location</label>
+                        <Input
+                            id="location"
+                            _onInputChange={(value) => setSuggestionText(value)}
+                            _placeholder={"Location"}
+                            _value={suggestionText}
+                            className='input-style'
+                            />
+                    </div>
+                    <div className="form-group location-group">
+                        <button className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
+                            Find Location
+                        </button>
+                        <button className="pick-location-btn">
+                            Pick Location
+                        </button>
+                    </div>
                 </div>
 
+                {/* Map container */}
                 <div className="map-container-modal">
-                    <div ref={mapContainer} className="map" />
+                    <div ref={mapContainer} className="map-modal" />
                 </div>
+
                 <div className="bottom-fields">
-                    <LargeButton _label="Create event" _type="submit" />
+                    {/* Create event button */}
+                    <LargeButton _label="Create Event" _type="submit" />
                 </div>
-                {eventFormError && <div className="error-message">{eventFormError} </div>}
+
+                {eventFormError && <div className="error-message">{eventFormError}</div>}
             </form>
         </div>
     );

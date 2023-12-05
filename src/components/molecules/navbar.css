@@ -28,6 +28,7 @@
 .title-event {
     font-size: 2.5rem; /* Adjust the font size for the 'Events' title */
     margin: 20px 0; /* Add more margin from the top */
+    color: white;
 }
   
 .right {
@@ -50,6 +51,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     transition: background-color 0.3s, color 0.3s;
+    color: white;
 }
 
 .right li a{
@@ -93,14 +95,11 @@
 .logout-btn {
     width: 30px;
     height: 30px;
-    background: url('logoutblack.png') no-repeat;
     background-size: 30px;
     border: none;
     cursor: pointer;
 }
 
-.logout-btn:hover{
-    background: url('logoutorange.png') no-repeat;
-    background-size: 30px;
-    
-}
+.logout-btn:hover svg {
+    color: red; /* Change the color to your desired hover color */
+  }

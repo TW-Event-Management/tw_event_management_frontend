@@ -27,11 +27,9 @@ const MapRender = () => {
             const rect = mapDiv.getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-            if (scrollTop <= 300) {
-                // Scrolling up and above 250px
+            if (scrollTop <= 355) {
                 mapDiv.classList.remove('fixed-map');
-            } else if (rect.top <= 190) {
-                // Scrolling down
+            } else if (rect.top <= 200) {
                 mapDiv.classList.add('fixed-map');
             }
         };

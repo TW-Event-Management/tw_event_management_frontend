@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import "./homepage.css";
+import { useRouter } from 'next/navigation';
 
 const HomepageForm = () => {
+  const router = useRouter();
+
   return (
     <>
       <div class="container">
@@ -11,7 +14,9 @@ const HomepageForm = () => {
           expertise. Elevate your occasions with precision planning and flawless
           execution.
         </p>
-        <a href="#">Learn more</a>
+        <button  className="register-redirect" onClick={() => {
+                        router.push('/register');
+                    }}>Learn more</button>
       </div>
       <div class="blank"></div>
       <div class="container second">
