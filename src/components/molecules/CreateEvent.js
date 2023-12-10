@@ -37,31 +37,32 @@ const CreateEvent = () => {
     const eventInfo = {
         location: {
             coordinates: [_lon, _lat],
-            name: locationName
+            locName: locationName
         },
     };
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setEventFormError('');
-    
-        if (eventName && description && organizer && eventInfo && date && time) {
+        if (eventName && description && eventInfo && organizer && date && time) {
+
             try {
                 const response = await axios.post('http://localhost:3000/events/create-event', {
                     name: eventName,
-                    date: new Date(`${date}T${time}`),
                     description: description,
+                    date: new Date(`${date}T${time}`),
                     organizer: organizer,
-                    location: eventInfo.location.name,
-                    coordinates: eventInfo.location.coordinates,
+                    location: eventInfo.location,
                 });
-    
+
                 location.reload();
             } catch (error) {
                 console.error(error);
+                
             }
+
         } else {
-            setEventFormError('Please fill in all fields.');
+          setEventFormError('Please fill in all fields.');
         }
     };
     

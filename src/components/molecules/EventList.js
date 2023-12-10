@@ -29,7 +29,7 @@ const EventCard = ({ event }) => {
       <div className="event-card">
         <div className="event-header">
           <h2>
-            <span className="event-name">{event.name}</span><span className="event-location"> at {event.location}</span></h2>
+            <span className="event-name">{event.name}</span><span className="event-location"> at {event.location.locName}</span></h2>
           <p className="event-time">Starting at: {formattedTime}</p>
         </div>
 
@@ -58,7 +58,7 @@ const EventModal = ({ selectedEvent, onClose }) => {
         </div>
         <div className="modal-content">
           <p className="event-info">Date: {selectedEvent.date}</p>
-          <p className="event-info">Location: {selectedEvent.location}</p>
+          <p className="event-info">Location: {selectedEvent.location.coordinates}</p>
           <p className="event-description">{selectedEvent.description}</p>
         </div>
         <div className="modal-footer">
