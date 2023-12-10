@@ -71,11 +71,20 @@ const EventModal = ({ selectedEvent, onClose }) => {
 
 };
 
-const EventList = () => {
+const convertToRomanianTime = (utcDate) => {
+  const romanianTimeZoneOffset = 3; // UTC+3 during daylight saving time
+
+  const localDate = new Date(utcDate);
+  const utcMilliseconds = localDate.getTime() + (localDate.getTimezoneOffset() * 60000);
+  const romanianMilliseconds = utcMilliseconds + (romanianTimeZoneOffset * 3600000);
+
+  return new Date(romanianMilliseconds);
+};
+
+const EventList = ({ selectedDate }) => {
   const router = useRouter();
 
   const [events, setEvents] = useState([]);
-
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleCardClick = (event) => {
@@ -89,14 +98,24 @@ const EventList = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/events/get-all')
-        setEvents(response.data);
+        const response = await axios.get('http://localhost:3000/events/get-all');
+
+        const filteredEvents = response.data.filter((event) => {
+          const eventDate = convertToRomanianTime(event.date);
+          const formattedEventDate = eventDate.toISOString().split('T')[0];
+          const formattedSelectedDate = selectedDate.toISOString().split('T')[0];
+
+          return formattedEventDate === formattedSelectedDate;
+        });
+
+        setEvents(filteredEvents);
       } catch (error) {
         console.error('Error fetching events: ', error);
       }
-    }
+    };
+
     fetchEvents();
-  }, []);
+  }, [selectedDate]);
 
   return (
     <div className="eventnmap">
@@ -109,7 +128,7 @@ const EventList = () => {
       </div>
       {selectedEvent && <EventModal selectedEvent={selectedEvent} onClose={handleCloseModal} />}
       <div className="map-body">
-        <MapRender />
+        <MapRender events={events} />
       </div>
     </div>
   );
