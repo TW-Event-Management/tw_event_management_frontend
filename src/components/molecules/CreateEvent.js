@@ -6,13 +6,10 @@ import LargeButton from '@/components/atoms/LargeButton';
 import './molecules-style.css';
 import '../atoms/atoms-style.css';
 
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const CreateEvent = () => {
-    const [groups, setGroups] = useState([]);
-    const [filterGroup, setFilterGroup] = useState("all");
-    const [selectedGroup, setSelectedGroup] = useState("all");
 
     const [_lat, setLat] = useState(21.2087);
     const [_lon, setLon] = useState(45.7489);
@@ -24,7 +21,6 @@ const CreateEvent = () => {
     const router = useRouter();
     const [value, setValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [_coords, setCoords] = useState([]);
 
     const [eventName, setEventName] = useState('');
     const [description, setDescription] = useState('');
@@ -48,15 +44,18 @@ const CreateEvent = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setEventFormError('');
-        if (eventName && description && eventInfo && date && time) {
+    
+        if (eventName && description && organizer && eventInfo && date && time) {
             try {
                 const response = await axios.post('http://localhost:3000/events/create-event', {
-                    title: eventName,
+                    name: eventName,
                     date: new Date(`${date}T${time}`),
                     description: description,
                     organizer: organizer,
-                    location: eventInfo.location,
+                    location: eventInfo.location.name,
+                    coordinates: eventInfo.location.coordinates,
                 });
+    
                 location.reload();
             } catch (error) {
                 console.error(error);
@@ -65,7 +64,8 @@ const CreateEvent = () => {
             setEventFormError('Please fill in all fields.');
         }
     };
-
+    
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -130,20 +130,26 @@ const CreateEvent = () => {
         markerElement.style.justifyContent = 'center';
         markerElement.style.alignItems = 'center';
         markerElement.innerText = suggestion[0].split(",")[0];
+    
+        console.log('Before setting state - Lat:', _lat, 'Lon:', _lon);
 
-        setLat(suggestion[2]);
-        setLon(suggestion[1]);
+        setLat(parseFloat(suggestion[2]));
+        setLon(parseFloat(suggestion[1]));
 
+        console.log('After setting state - Lat:', _lat, 'Lon:', _lon);
         setSuggestionText(suggestion[0]); // Set suggestion text
-
-        const marker = new mapboxgl.Marker({ element: markerElement }).setLngLat([parseFloat(suggestion[2]), parseFloat(suggestion[1])]).addTo(map.current);
-
+    
+        const marker = new mapboxgl.Marker({ element: markerElement })
+            .setLngLat([parseFloat(suggestion[2]), parseFloat(suggestion[1])])
+            .addTo(map.current);
+    
         map.current.flyTo({
             center: [parseFloat(suggestion[2]), parseFloat(suggestion[1])],
             zoom: 15,
             duration: 3500,
         });
     }
+    
 
     return (
         <div className="create-event-form">
@@ -167,6 +173,16 @@ const CreateEvent = () => {
                             id="description"
                             _onInputChange={(value) => setDescription(value)}
                             _placeholder={"Description"}
+                        />
+                    </div>
+
+                    {/* Organizer */}
+                    <div className="form-group">
+                        <label htmlFor="organizer">Organizer</label>
+                        <Input 
+                            id="organizer"
+                            _onInputChange={(value) => setOrganizer(value)}
+                            _placeholder={"Organizer"}
                         />
                     </div>
 
@@ -203,7 +219,7 @@ const CreateEvent = () => {
                                 >
                                     {suggestion[0]}
                                 </div>
-                            ) : null
+                            ) : ""
                         ))}
                     </div>
 
@@ -221,9 +237,6 @@ const CreateEvent = () => {
                     <div className="form-group location-group">
                         <button className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
                             Find Location
-                        </button>
-                        <button className="pick-location-btn">
-                            Pick Location
                         </button>
                     </div>
                 </div>
