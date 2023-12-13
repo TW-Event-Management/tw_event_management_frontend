@@ -29,6 +29,7 @@ const CreateEvent = () => {
     const [time, setTime] = useState('');
 
     const [suggestionText, setSuggestionText] = useState('');
+    const [selectedUsers, setSelectedUsers] = useState([]);
 
     const [users, setUsers] = useState([]);
     const [userName, setUserName] = useState([]);
@@ -39,11 +40,15 @@ const CreateEvent = () => {
             coordinates: [_lon, _lat],
             locName: locationName
         },
+        selectedUsers: selectedUsers.map(user => user.userMail),
     };
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setEventFormError('');
+
+        console.log('Selected Users before form submission:', selectedUsers);
+
         if (eventName && description && eventInfo && organizer && date && time) {
 
             try {
@@ -53,20 +58,58 @@ const CreateEvent = () => {
                     date: new Date(`${date}T${time}`),
                     organizer: organizer,
                     location: eventInfo.location,
+                    invitations: eventInfo.selectedUsers,
                 });
 
                 location.reload();
             } catch (error) {
                 console.error(error);
-                
+
             }
 
         } else {
-          setEventFormError('Please fill in all fields.');
+            setEventFormError('Please fill in all fields.');
         }
     };
-    
-    
+
+    // Add this function to your component
+    const handleUserClick = (user) => {
+        const isSelected = selectedUsers.some((selectedUser) => selectedUser.userMail === user.userMail);
+
+        if (isSelected) {
+            // If user is already selected, remove from the list
+            setSelectedUsers((prevSelectedUsers) =>
+                prevSelectedUsers.filter((selectedUser) => selectedUser.userMail !== user.userMail)
+            );
+        } else {
+            // If user is not selected, add to the list
+            setSelectedUsers((prevSelectedUsers) => {
+                const newSelectedUsers = [...prevSelectedUsers, user];
+                console.log('Selected User:', user);
+                console.log('All Selected Users:', newSelectedUsers);
+                return newSelectedUsers;
+            });
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get('http://localhost:3000/users/get-all');
+                const userData = res.data.map((user) => ({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    userMail: user.email,
+                }));
+                setUsers(userData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -109,7 +152,7 @@ const CreateEvent = () => {
             );
             const suggestions = response.data.map((item) => [item.display_name, item.lat, item.lon]);
             let name = response.data[0].display_name.split(",")[0];
-            
+
             setLocationName(name);
             setSuggestions(suggestions);
         } catch (error) {
@@ -131,7 +174,7 @@ const CreateEvent = () => {
         markerElement.style.justifyContent = 'center';
         markerElement.style.alignItems = 'center';
         markerElement.innerText = suggestion[0].split(",")[0];
-    
+
         console.log('Before setting state - Lat:', _lat, 'Lon:', _lon);
 
         setLat(parseFloat(suggestion[2]));
@@ -139,18 +182,18 @@ const CreateEvent = () => {
 
         console.log('After setting state - Lat:', _lat, 'Lon:', _lon);
         setSuggestionText(suggestion[0]); // Set suggestion text
-    
+
         const marker = new mapboxgl.Marker({ element: markerElement })
             .setLngLat([parseFloat(suggestion[2]), parseFloat(suggestion[1])])
             .addTo(map.current);
-    
+
         map.current.flyTo({
             center: [parseFloat(suggestion[2]), parseFloat(suggestion[1])],
             zoom: 15,
             duration: 3500,
         });
     }
-    
+
 
     return (
         <div className="create-event-form">
@@ -180,7 +223,7 @@ const CreateEvent = () => {
                     {/* Organizer */}
                     <div className="form-group">
                         <label htmlFor="organizer">Organizer</label>
-                        <Input 
+                        <Input
                             id="organizer"
                             _onInputChange={(value) => setOrganizer(value)}
                             _placeholder={"Organizer"}
@@ -223,7 +266,6 @@ const CreateEvent = () => {
                             ) : ""
                         ))}
                     </div>
-
                     {/* Location input and search button */}
                     <div className="form-group">
                         <label htmlFor="location">Location</label>
@@ -233,7 +275,7 @@ const CreateEvent = () => {
                             _placeholder={"Location"}
                             _value={suggestionText}
                             className='input-style'
-                            />
+                        />
                     </div>
                     <div className="form-group location-group">
                         <button className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
@@ -241,7 +283,14 @@ const CreateEvent = () => {
                         </button>
                     </div>
                 </div>
-
+                <div className="user-list">
+                    <h4>Select invitations</h4>
+                    {users.map((user) => (
+                        <div key={user.userMail} className="user-item" onClick={() => handleUserClick(user)}>
+                            {user.userMail}
+                        </div>
+                    ))}
+                </div>
                 {/* Map container */}
                 <div className="map-container-modal">
                     <div ref={mapContainer} className="map-modal" />
@@ -257,5 +306,4 @@ const CreateEvent = () => {
         </div>
     );
 }
-
 export default CreateEvent;
