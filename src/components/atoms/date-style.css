@@ -8,6 +8,7 @@
 }
 
 .date-preview {
+    /* Your existing styles for date-preview */
     position: relative;
     width: 642px;
     height: 69px;
@@ -21,6 +22,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transition-property: opacity, background-color;
+}
+  
+.date-preview.transition {
+    opacity: 0.7;
+    background-color: #2e3233;
 }
 
 .leftButton,
@@ -56,17 +64,6 @@
     padding: 4px 8px;
     font-size: 14px;
     margin-right: 5px;
-}
-
-.date-preview {
-    width: 642px;
-    height: 69px;
-    margin: 0 auto;
-    flex-shrink: 0;
-    border-radius: 16px;
-    border: 1px solid #DADADA;
-    background: #FFF;
-    box-shadow: 0px 4px 18px 1px rgba(0, 0, 0, 0.10);
 }
 
 .date-preview p {

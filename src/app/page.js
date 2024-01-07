@@ -21,7 +21,7 @@ const Home = () => {
 
       if (!token) {
         // redirect to RegisterPage if token doesn't exist
-        router.push('/homepage');
+        router.push('/register');
       } else {
         // verify user with token
         try {
