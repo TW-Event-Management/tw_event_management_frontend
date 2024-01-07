@@ -35,6 +35,8 @@ const CreateEvent = () => {
     const [userName, setUserName] = useState([]);
     const [eventFormError, setEventFormError] = useState('');
 
+    const [searchTerm, setSearchTerm] = useState('');
+
     const eventInfo = {
         location: {
             coordinates: [_lon, _lat],
@@ -59,6 +61,7 @@ const CreateEvent = () => {
                     organizer: organizer,
                     location: eventInfo.location,
                     invitations: eventInfo.selectedUsers,
+                    participants: [],
                 });
 
                 location.reload();
@@ -74,24 +77,31 @@ const CreateEvent = () => {
 
     // Add this function to your component
     const handleUserClick = (user) => {
-        const isSelected = selectedUsers.some((selectedUser) => selectedUser.userMail === user.userMail);
-
+        // Check if the user is already selected
+        const isSelected = selectedUsers.includes(user);
+    
+        // Toggle selection
         if (isSelected) {
-            // If user is already selected, remove from the list
-            setSelectedUsers((prevSelectedUsers) =>
-                prevSelectedUsers.filter((selectedUser) => selectedUser.userMail !== user.userMail)
-            );
+          setSelectedUsers(selectedUsers.filter((selectedUser) => selectedUser !== user));
         } else {
-            // If user is not selected, add to the list
-            setSelectedUsers((prevSelectedUsers) => {
-                const newSelectedUsers = [...prevSelectedUsers, user];
-                console.log('Selected User:', user);
-                console.log('All Selected Users:', newSelectedUsers);
-                return newSelectedUsers;
-            });
+          setSelectedUsers([...selectedUsers, user]);
         }
-    };
+      };
 
+      const handleSearchChange = (event) => {
+        const searchTerm = event.target.value.toLowerCase();
+        setSearchTerm(searchTerm);
+      };
+    
+      const filteredUsers = Array.isArray(users)
+        ? users.filter((user) =>
+            user &&
+            user.userMail &&
+            typeof user.userMail === 'string' &&
+            user.userMail.toLowerCase().includes(searchTerm)
+          )
+        : [];
+      
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -161,6 +171,11 @@ const CreateEvent = () => {
     };
 
     const clickSuggestion = (suggestion) => {
+        const name = suggestion[0].split(",")[0];
+    
+        // Set suggestion text
+        setSuggestionText(name);
+            
         const markerElement = document.createElement('div');
         markerElement.className = 'custom-marker';
         markerElement.style.backgroundColor = 'black';
@@ -173,26 +188,29 @@ const CreateEvent = () => {
         markerElement.style.display = 'flex';
         markerElement.style.justifyContent = 'center';
         markerElement.style.alignItems = 'center';
-        markerElement.innerText = suggestion[0].split(",")[0];
-
+        markerElement.innerText = name;
+    
         console.log('Before setting state - Lat:', _lat, 'Lon:', _lon);
-
+    
         setLat(parseFloat(suggestion[2]));
         setLon(parseFloat(suggestion[1]));
-
+    
         console.log('After setting state - Lat:', _lat, 'Lon:', _lon);
-        setSuggestionText(suggestion[0]); // Set suggestion text
-
+    
         const marker = new mapboxgl.Marker({ element: markerElement })
             .setLngLat([parseFloat(suggestion[2]), parseFloat(suggestion[1])])
             .addTo(map.current);
-
+    
         map.current.flyTo({
             center: [parseFloat(suggestion[2]), parseFloat(suggestion[1])],
             zoom: 15,
             duration: 3500,
         });
+
+        setSuggestions([]);
+
     }
+    
 
 
     return (
@@ -251,6 +269,16 @@ const CreateEvent = () => {
                             />
                         </div>
                     </div>
+                    
+                    {/* Category */}
+                    <div className="form-group">
+                        <label htmlFor="category">Category</label>
+                        <Input
+                            id="category"
+                            _onInputChange={(value) => setCategory(value)}
+                            _placeholder={"Select Category"}
+                        />
+                    </div>
 
                     {/* Suggestions */}
                     <div className="suggestions">
@@ -266,6 +294,7 @@ const CreateEvent = () => {
                             ) : ""
                         ))}
                     </div>
+
                     {/* Location input and search button */}
                     <div className="form-group">
                         <label htmlFor="location">Location</label>
@@ -283,17 +312,41 @@ const CreateEvent = () => {
                         </button>
                     </div>
                 </div>
-                <div className="user-list">
-                    <h4>Select invitations</h4>
-                    {users.map((user) => (
-                        <div key={user.userMail} className="user-item" onClick={() => handleUserClick(user)}>
-                            {user.userMail}
-                        </div>
-                    ))}
-                </div>
+
                 {/* Map container */}
                 <div className="map-container-modal">
                     <div ref={mapContainer} className="map-modal" />
+                </div>
+                
+                <br />
+                <br />
+
+                {/* Users invitations */}
+                <div className="form-group">
+                    <div className="user-list">
+                    <label htmlFor="users">Invite users</label>
+
+                    {/* Search bar */}
+                    <input
+                        type="text"
+                        placeholder="Search users..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+
+                    {/* Display user buttons */}
+                    <div className="user-buttons">
+                        {filteredUsers.map((user) => (
+                        <button
+                            key={user.userMail}
+                            className={`user-item ${selectedUsers.includes(user) ? 'selected' : ''}`}
+                            onClick={() => handleUserClick(user)}
+                        >
+                            {user.userMail}
+                        </button>
+                        ))}
+                    </div>
+                    </div>
                 </div>
 
                 <div className="bottom-fields">
