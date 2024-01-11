@@ -4,24 +4,14 @@ import { useRouter } from 'next/navigation';
 import './event-list.css';
 import MapRender from '@/components/atoms/MapRender';
 
-const EventCard = ({ event }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const router = useRouter();
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-
+const EventCard = ({ event, onCardClick }) => {
   const date = new Date(event.date);
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 
   const handleViewButtonClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+    onCardClick(event);
   };
 
   return (
@@ -37,8 +27,6 @@ const EventCard = ({ event }) => {
           <button className="view-button" onClick={handleViewButtonClick}>View</button>
         </div>
       </div>
-
-      {isModalOpen && <EventModal selectedEvent={event} onClose={handleCloseModal} />}
     </div>
   );
 };
@@ -72,12 +60,12 @@ const EventModal = ({ selectedEvent, onClose }) => {
 
   useEffect(() => {
     checkToken();
-    // Check if there's an attendance status in localStorage
-    const storedIsAttending = localStorage.getItem('isAttending');
+    // Check if there's an attendance status in localStorage for the selectedEvent
+    const storedIsAttending = localStorage.getItem(`isAttending_${selectedEvent._id}`);
     if (storedIsAttending === 'true') {
       setIsAttending(true);
     }
-  }, []); // Run this effect only once when the component mounts
+  }, [selectedEvent._id]); // Run this effect whenever the selectedEvent changes
 
   const handleAttendClick = async () => {
     try {
@@ -98,8 +86,8 @@ const EventModal = ({ selectedEvent, onClose }) => {
       if (response.status === 200) {
         // Assuming the server responds with a status of 200 for a successful attendance
         setIsAttending(true);
-        // Store the attendance status in localStorage
-        localStorage.setItem('isAttending', 'true');
+        // Store the attendance status in localStorage for the selectedEvent
+        localStorage.setItem(`isAttending_${selectedEvent._id}`, 'true');
       }
 
     } catch (error) {
