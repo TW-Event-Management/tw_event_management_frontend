@@ -2,26 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import './event-list.css';
-import MapRender from '@/components/atoms/MapRender'
+import MapRender from '@/components/atoms/MapRender';
 
-const EventCard = ({ event }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const router = useRouter();
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-
+const EventCard = ({ event, onCardClick }) => {
   const date = new Date(event.date);
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 
   const handleViewButtonClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+    onCardClick(event);
   };
 
   return (
@@ -37,16 +27,71 @@ const EventCard = ({ event }) => {
           <button className="view-button" onClick={handleViewButtonClick}>View</button>
         </div>
       </div>
-
-      {isModalOpen && <EventModal selectedEvent={event} onClose={handleCloseModal} />}
     </div>
   );
 };
 
 const EventModal = ({ selectedEvent, onClose }) => {
+  const [isAttending, setIsAttending] = useState(false);
+  const [mail, setMail] = useState('');
+
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains('event-modal-overlay')) {
       onClose();
+    }
+  };
+
+  const checkToken = async () => {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    // verify user with token
+    try {
+      const response = await axios.post('http://localhost:3000/register/verify-token', {
+        token: token,
+      });
+      console.log(response.data);
+      setMail(response.data.user.email);
+      console.log(mail);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+    // Check if there's an attendance status in localStorage for the selectedEvent
+    const storedIsAttending = localStorage.getItem(`isAttending_${selectedEvent._id}`);
+    if (storedIsAttending === 'true') {
+      setIsAttending(true);
+    }
+  }, [selectedEvent._id]); // Run this effect whenever the selectedEvent changes
+
+  const handleAttendClick = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await axios.post(
+        `http://localhost:3000/events/attend/${selectedEvent._id}/${mail}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log('Attend event response:', response.data);
+
+      if (response.status === 200) {
+        // Assuming the server responds with a status of 200 for a successful attendance
+        setIsAttending(true);
+        // Store the attendance status in localStorage for the selectedEvent
+        localStorage.setItem(`isAttending_${selectedEvent._id}`, 'true');
+      }
+
+    } catch (error) {
+      console.error('Error attending event:', error);
     }
   };
 
@@ -62,13 +107,20 @@ const EventModal = ({ selectedEvent, onClose }) => {
           <p className="event-description">{selectedEvent.description}</p>
         </div>
         <div className="modal-footer">
-          <button className="participate-button">Participate</button>
-          <button onClick={onClose} className="close-button">Close</button>
+          {isAttending ? (
+            <p className="attending-message">You are attending this event</p>
+          ) : (
+            <button className="participate-button" onClick={handleAttendClick}>
+              Attend
+            </button>
+          )}
+          <button onClick={onClose} className="close-button">
+            Close
+          </button>
         </div>
       </div>
     </div>
   );
-
 };
 
 const convertToRomanianTime = (utcDate) => {
