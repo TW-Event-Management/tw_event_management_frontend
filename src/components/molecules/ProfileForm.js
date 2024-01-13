@@ -40,6 +40,7 @@ const ProfileForm = () => {
     lastName: "",
   });
   const [userEvents, setUserEvents] = useState([]);
+  const [userEventsAttended, setUserEventsAttended] = useState([]);
 
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -76,11 +77,15 @@ const ProfileForm = () => {
 
               const fullName = `${firstName} ${lastName}`;
 
-              // Filter events based on user's ObjectID
               const filteredEvents = events.filter(
                 (event) => event.organizer === fullName
               );
               setUserEvents(filteredEvents);
+
+              const filteredEventsAttended = events.filter(
+                (event) => event.participants.includes(emailFromLocalStorage)
+              );
+              setUserEventsAttended(filteredEventsAttended);
             }
           }
         }
@@ -116,7 +121,28 @@ const ProfileForm = () => {
                   <p className="event-description">
                     Description: {event.description}
                   </p>
-                  {/* Add other event details here */}
+                  <p className="event-description">
+                    Participants: {event.participants.join(" ")}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="events-section">
+            <h2 className="events-title">Events Attending</h2>
+            <div className="event-cards">
+              {userEventsAttended.map((event) => (
+                <div key={event._id} className="event-card">
+                  <h3 className="event-name">{event.name}</h3>
+                  <p className="event-organizer">
+                    Organizer: {event.organizer}
+                  </p>
+                  <p className="event-description">
+                    Description: {event.description}
+                  </p>
+                  <p className="event-description">
+                    Participants: {event.participants.join(" ")}
+                  </p>
                 </div>
               ))}
             </div>
