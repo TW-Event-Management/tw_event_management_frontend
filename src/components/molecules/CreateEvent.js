@@ -206,7 +206,7 @@ const CreateEvent = () => {
             zoom: 15,
             duration: 3500,
         });
-
+        
         setSuggestions([]);
 
     }

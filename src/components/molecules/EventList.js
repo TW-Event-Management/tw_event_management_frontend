@@ -29,7 +29,8 @@ const EventCard = ({ event }) => {
       <div className="event-card">
         <div className="event-header">
           <h2>
-            <span className="event-name">{event.name}</span><span className="event-location"> at {event.location.locName}</span></h2>
+            <span className="event-name">{event.name}</span><span className="event-location"> at {event.location.locName}</span>
+          </h2>
           <p className="event-time">Starting at: {formattedTime}</p>
         </div>
 
@@ -87,8 +88,13 @@ const EventList = ({ selectedDate }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  const map = useRef(null);
+
   const handleCardClick = (event) => {
     setSelectedEvent(event);
+    if (map.current) {
+      map.current.flyToLocation(event.location.coordinates);
+    }
   };
 
   const handleCloseModal = () => {
@@ -128,7 +134,7 @@ const EventList = ({ selectedDate }) => {
       </div>
       {selectedEvent && <EventModal selectedEvent={selectedEvent} onClose={handleCloseModal} />}
       <div className="map-body">
-        <MapRender events={events} />
+        <MapRender events={events} selectedEvent={selectedEvent} onMapRef={(mapRef) => (map.current = mapRef)} />
       </div>
     </div>
   );
