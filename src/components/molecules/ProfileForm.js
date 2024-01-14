@@ -24,6 +24,7 @@ const ProfileForm = () => {
             }
           );
           setIsAdmin(response.data.user.admin);
+          setIsWaiting(response.data.user.waiting);
         } catch (error) {
           console.error(error);
         }
@@ -38,11 +39,32 @@ const ProfileForm = () => {
     id: "",
     firstName: "",
     lastName: "",
+    waiting: "",
   });
   const [userEvents, setUserEvents] = useState([]);
   const [userEventsAttended, setUserEventsAttended] = useState([]);
-
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
+
+  const handleRequestToBeOrganizer = async () => {
+    try {
+      const userId = userInfo.id;
+
+      // Send a request to the server to set waiting to true
+      await axios.patch(`http://localhost:3000/users/setWaiting/${userId}`);
+
+      // Update the local state to reflect the change
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        waiting: true,
+      }));
+      window.location.reload();
+
+      // Optionally, you can display a message or trigger a notification to the user.
+    } catch (error) {
+      console.error("Error requesting to be an organizer:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -67,12 +89,13 @@ const ProfileForm = () => {
             );
 
             if (userByEmail) {
-              const { _id, firstName, lastName } = userByEmail;
+              const { _id, firstName, lastName, waiting } = userByEmail;
 
               setUserInfo({
                 id: _id,
                 firstName: firstName,
                 lastName: lastName,
+                waiting: waiting,
               });
 
               const fullName = `${firstName} ${lastName}`;
@@ -82,8 +105,8 @@ const ProfileForm = () => {
               );
               setUserEvents(filteredEvents);
 
-              const filteredEventsAttended = events.filter(
-                (event) => event.participants.includes(emailFromLocalStorage)
+              const filteredEventsAttended = events.filter((event) =>
+                event.participants.includes(emailFromLocalStorage)
               );
               setUserEventsAttended(filteredEventsAttended);
             }
@@ -104,9 +127,37 @@ const ProfileForm = () => {
         <div className="container">
           <div className="profile-section">
             <h1 className="profile-title">User Profile</h1>
-            <p className="profile-info">Email: {storedEmail}</p>
-            <p className="profile-info">First Name: {userInfo.firstName}</p>
-            <p className="profile-info">Last Name: {userInfo.lastName}</p>
+            <p className="profile-info">
+              <span className="white-color">Email:</span> {storedEmail}
+            </p>
+            <p className="profile-info">
+              <span className="white-color">First name:</span>{" "}
+              {userInfo.firstName}
+            </p>
+            <p className="profile-info">
+              <span className="white-color">Last name:</span>{" "}
+              {userInfo.lastName}
+            </p>
+            {!isAdmin && !isWaiting && (
+              <button
+                className="button-organizer"
+                onClick={handleRequestToBeOrganizer}
+              >
+                Request to be an Organizer
+              </button>
+            )}
+            {!isAdmin && isWaiting && (
+              <button
+                disabled
+                className="button-organizer-waiting"
+                onClick={handleRequestToBeOrganizer}
+              >
+                Request to be an organizer
+              </button>
+            )}
+            {!isAdmin && isWaiting && (
+              <p className="wait">Wait for a response!</p>
+            )}
           </div>
 
           <div className="events-section">
