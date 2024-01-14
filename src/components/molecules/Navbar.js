@@ -9,6 +9,7 @@ import "./CreateEventModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
+
 import CreateEvent from "@/components/molecules/CreateEvent";
 
 const Navbar = ({ isAdmin: propIsAdmin }) => {
@@ -17,16 +18,18 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
   const [isAdmin, setIsAdmin] = useState(propIsAdmin);
 
   const logout = () => {
-    const email = localStorage.getItem("email");
-    if (email) {
-      localStorage.removeItem("email");
-      localStorage.removeItem("token");
-      router.push("./login");
-    }
+    // Clear user-related data from localStorage
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
+  
+    // Redirect to the login page
+    router.push("/login");
   };
 
   const handleCreateClick = () => {
-    setIsModalOpen(true);
+    if (isAdmin) {
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
@@ -69,6 +72,7 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
         </div>
         <div className="right">
           <ul>
+            {/* Show the "Create" button for admins */}
             {isAdmin && (
               <li className="admin-only" onClick={handleCreateClick}>
                 Create

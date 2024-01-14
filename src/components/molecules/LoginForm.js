@@ -33,9 +33,12 @@ const LoginForm = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", email);
 
-        router.push({
-          pathname: "/homepage",
-        });
+        if (email.includes('@gloevents.com')) {
+          router.push("/dashboard");
+        } else {
+          router.push("/homepage");
+        }
+        
       } catch (error) {
         console.error(error);
         setPasswordError("Incorrect mail or password.");
