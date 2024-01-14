@@ -50,17 +50,13 @@ const ProfileForm = () => {
     try {
       const userId = userInfo.id;
 
-      // Send a request to the server to set waiting to true
       await axios.patch(`http://localhost:3000/users/setWaiting/${userId}`);
 
-      // Update the local state to reflect the change
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
         waiting: true,
       }));
       window.location.reload();
-
-      // Optionally, you can display a message or trigger a notification to the user.
     } catch (error) {
       console.error("Error requesting to be an organizer:", error);
     }
