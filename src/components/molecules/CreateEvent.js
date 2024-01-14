@@ -37,6 +37,8 @@ const CreateEvent = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [category, setCategory] = useState('');
+
     const eventInfo = {
         location: {
             coordinates: [_lon, _lat],
@@ -62,6 +64,7 @@ const CreateEvent = () => {
                     location: eventInfo.location,
                     invitations: eventInfo.selectedUsers,
                     participants: [],
+                    category: category,
                 });
 
                 location.reload();
@@ -273,11 +276,20 @@ const CreateEvent = () => {
                     {/* Category */}
                     <div className="form-group">
                         <label htmlFor="category">Category</label>
-                        <Input
+                        <select
                             id="category"
-                            _onInputChange={(value) => setCategory(value)}
-                            _placeholder={"Select Category"}
-                        />
+                            onChange={(e) => setCategory(e.target.value)}
+                            value={category}
+                            className="category-style"
+                        >
+                            <option value="">Select Category</option>
+                            <option value="Art">Art</option>
+                            <option value="Family">Family</option>
+                            <option value="Kids">Kids</option>
+                            <option value="Sport">Sport</option>
+                            <option value="Charity">Charity</option>
+                            {/* Add more categories as needed */}
+                        </select>
                     </div>
 
                     {/* Suggestions */}
@@ -307,7 +319,7 @@ const CreateEvent = () => {
                         />
                     </div>
                     <div className="form-group location-group">
-                        <button className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
+                        <button type="button" className="search-btn" onClick={() => computeSuggestion(suggestionText)}>
                             Find Location
                         </button>
                     </div>
@@ -338,6 +350,7 @@ const CreateEvent = () => {
                     <div className="user-buttons">
                         {filteredUsers.map((user) => (
                         <button
+                            type="button"
                             key={user.userMail}
                             className={`user-item ${selectedUsers.includes(user) ? 'selected' : ''}`}
                             onClick={() => handleUserClick(user)}

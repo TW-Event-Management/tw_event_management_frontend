@@ -11,11 +11,12 @@ const DateSelector = () => {
   const [transition, setTransition] = useState(false);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('All'); // Added state for selected category
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/events/get-all'); // Adjust the API endpoint accordingly
+        const response = await axios.get('http://localhost:3000/events/get-all');
         setEvents(response.data);
         setLoading(false);
       } catch (error) {
@@ -25,13 +26,12 @@ const DateSelector = () => {
     };
 
     fetchEvents();
-  }, []); // Fetch events on component mount
+  }, []);
 
   const handlePreviousDay = () => {
     const currentDate = new Date();
     const newDate = new Date(selectedDate);
 
-    // Check if newDate is not older than the current date
     if (newDate >= currentDate) {
       newDate.setDate(selectedDate.getDate() - 1);
       setTransition(true);
@@ -40,7 +40,7 @@ const DateSelector = () => {
         setTransition(false);
       }, 300);
     }
-};
+  };
 
   const handleNextDay = () => {
     const newDate = new Date(selectedDate);
@@ -63,17 +63,19 @@ const DateSelector = () => {
 
     const formattedDate = newDate.toLocaleString('en-US', options);
 
-    // Count the events for the current date
-    const eventCount = events.filter(event => {
+    const filteredEvents = events.filter(event => {
       const eventDate = new Date(event.date);
-      return (
+      const isSameDate =
         eventDate.getDate() === newDate.getDate() &&
         eventDate.getMonth() === newDate.getMonth() &&
-        eventDate.getFullYear() === newDate.getFullYear()
-      );
-    }).length;
+        eventDate.getFullYear() === newDate.getFullYear();
 
-    return { formattedDate, eventCount };
+      const isSameCategory = selectedCategory === 'All' || event.category === selectedCategory;
+
+      return isSameDate && isSameCategory;
+    });
+
+    return { formattedDate, eventCount: filteredEvents.length };
   };
 
   const isPreviousDisabled = () => {
@@ -83,6 +85,10 @@ const DateSelector = () => {
 
   const previewOffsets = [0, 1, 2, 4, 5];
   const categories = ['All', 'Art', 'Food', 'Family', 'Kids', 'Sport', 'Charity'];
+
+  const handleCategoryClick = category => {
+    setSelectedCategory(category);
+  };
 
   return (
     <div className='container'>
@@ -105,12 +111,16 @@ const DateSelector = () => {
       </div>
       <div className='categories-container'>
         {categories.map((category, index) => (
-          <div key={index} className='category-bubble'>
+          <div
+            key={index}
+            className={`category-bubble ${category === selectedCategory ? 'active-category' : ''}`}
+            onClick={() => handleCategoryClick(category)}
+          >
             {category}
           </div>
         ))}
       </div>
-      <EventList selectedDate={selectedDate} />
+      <EventList selectedDate={selectedDate} selectedCategory={selectedCategory} />
     </div>
   );
 };

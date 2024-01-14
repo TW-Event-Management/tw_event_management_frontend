@@ -19,11 +19,15 @@ const EventCard = ({ event, onCardClick }) => {
       <div className="event-card">
         <div className="event-header">
           <h2>
-            <span className="event-name">{event.name}</span><span className="event-location"> at {event.location.locName}</span></h2>
+            <span className="event-name">{event.name}</span>
+            <span className="event-location"> at {event.location.locName}</span>
+          </h2>
           <p className="event-time">Starting at: {formattedTime}</p>
         </div>
-
-        <div className="event-button">
+        
+        {/* Display participants and view button on the same row */}
+        <div className="event-footer">
+          <p className="event-participants">Participants: {event.participants.length}</p>
           <button className="view-button" onClick={handleViewButtonClick}>View</button>
         </div>
       </div>
@@ -102,8 +106,14 @@ const EventModal = ({ selectedEvent, onClose }) => {
           <h2 className="event-name">{selectedEvent.name}</h2>
         </div>
         <div className="modal-content">
-          <p className="event-info">Date: {selectedEvent.date}</p>
-          <p className="event-info">Location: {selectedEvent.location.coordinates}</p>
+          <p className="event-info">Date: {convertToRomanianTime(selectedEvent.date).toLocaleDateString('ro-RO', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          })}</p>
+          <p className="event-info">Location: {selectedEvent.location.locName}</p>
           <p className="event-description">{selectedEvent.description}</p>
         </div>
         <div className="modal-footer">
@@ -133,7 +143,7 @@ const convertToRomanianTime = (utcDate) => {
   return new Date(romanianMilliseconds);
 };
 
-const EventList = ({ selectedDate }) => {
+const EventList = ({ selectedDate, selectedCategory}) => {
   const router = useRouter();
 
   const [events, setEvents] = useState([]);
@@ -157,7 +167,10 @@ const EventList = ({ selectedDate }) => {
           const formattedEventDate = eventDate.toISOString().split('T')[0];
           const formattedSelectedDate = selectedDate.toISOString().split('T')[0];
 
-          return formattedEventDate === formattedSelectedDate;
+          const isSameDate = formattedEventDate === formattedSelectedDate;
+          const isSameCategory = selectedCategory === 'All' || event.category === selectedCategory;
+
+          return isSameDate && isSameCategory;
         });
 
         setEvents(filteredEvents);
@@ -167,7 +180,7 @@ const EventList = ({ selectedDate }) => {
     };
 
     fetchEvents();
-  }, [selectedDate]);
+  }, [selectedDate, selectedCategory]);
 
   return (
     <div className="eventnmap">
