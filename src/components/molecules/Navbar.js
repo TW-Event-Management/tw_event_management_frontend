@@ -78,9 +78,6 @@ const Navbar = ({ isAdmin: propIsAdmin }) => {
                 Create
               </li>
             )}
-            <li className="notification" onClick={() => router.push("/")}>
-              Notification
-            </li>
             <li>
               <a className="profile" onClick={() => router.push("/profile")}>
                 Profile

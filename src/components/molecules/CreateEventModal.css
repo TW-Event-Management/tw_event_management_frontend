@@ -14,10 +14,10 @@
     font-size: medium;
     font-weight: 500;
     border-radius: 16px;
-    border: 1px solid hsl(0, 0%, 74%);
-    background: #F2F2F2;
+    border: 1px solid #fff; /* Updated border color to white */
+    background: #000; /* Updated background color to black */
     padding-left: 18px;
-    color: black;
+    color: #fff; /* Updated text color to white */
     outline: none;
     transition: .4s all;
 }
@@ -25,8 +25,8 @@
 /* New class for button styles */
 .button-style {
     height: 45px;
-    background-color: black;
-    color: white;
+    background-color: #000; /* Updated background color to black */
+    color: #fff; /* Updated text color to white */
     font-family: 'Inter';
     font-size: medium;
     font-weight: 700;
@@ -41,7 +41,6 @@
     cursor: pointer;
     box-shadow: 0px 4px 33px 15px rgba(0, 0, 0, 0.35);
 }
-
 
 .modal-overlay {
     position: fixed;
@@ -58,7 +57,7 @@
 }
 
 .modal {
-    background: white;
+    background: #000; /* Updated background color to black */
     padding: 45px;
     border-radius: 8px;
     z-index: 1001;
@@ -78,8 +77,9 @@
 
 .search-btn,
 .pick-location-btn {
-    flex: 1; /* Distribute available space equally between buttons */
-    margin: 0 5px; /* Adjust the horizontal margin as needed */
+    flex: 1;
+    margin: 0 5px;
+    border: 1px solid #fff; /* Add border to the buttons */
 }
 
 .search-btn {
@@ -180,20 +180,20 @@
     gap: 16px; /* Adjust the gap between items as needed */
   }
   
-  .user-item {
-    /* Your regular styles for user items */
-    flex: 1 0 calc(33.33% - 16px); /* Adjust the width based on the number of columns and gap */
-    background-color: #e0e0e0;
-    border: 1px solid #ccc;
+.user-item {
+    flex: 1 0 calc(33.33% - 16px);
+    background-color: #333; /* Updated color for user buttons */
+    border: 1px solid #000; /* Border color for user buttons */
     padding: 8px;
     margin: 4px;
     cursor: pointer;
-  }
-  
-  .user-item.selected {
-    background-color: #4caf50; /* Change to your desired selected color */
-    color: white; /* Change to your desired text color for the selected state */
-  }
+}
+
+/* Selected state for user buttons */
+.user-item.selected {
+    background-color: #4caf50;
+    color: white;
+}
   
   .category-style {
     width: 100%;

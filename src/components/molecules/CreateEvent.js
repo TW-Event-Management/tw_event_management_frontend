@@ -213,8 +213,6 @@ const CreateEvent = () => {
         setSuggestions([]);
 
     }
-    
-
 
     return (
         <div className="create-event-form">
@@ -364,7 +362,7 @@ const CreateEvent = () => {
 
                 <div className="bottom-fields">
                     {/* Create event button */}
-                    <LargeButton _label="Create Event" _type="submit" />
+                    <LargeButton _label="Create Event" _type="submit"/>
                 </div>
 
                 {eventFormError && <div className="error-message">{eventFormError}</div>}
