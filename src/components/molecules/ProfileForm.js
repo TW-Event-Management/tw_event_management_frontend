@@ -162,9 +162,6 @@ const ProfileForm = () => {
               {userEvents.map((event) => (
                 <div key={event._id} className="event-card">
                   <h3 className="event-name">{event.name}</h3>
-                  <p className="event-organizer">
-                    Organizer: {event.organizer}
-                  </p>
                   <p className="event-description">
                     Description: {event.description}
                   </p>
@@ -188,7 +185,7 @@ const ProfileForm = () => {
                     Description: {event.description}
                   </p>
                   <p className="event-description">
-                    Participants: {event.participants.join(" ")}
+                    Participants: {event.participants.length}
                   </p>
                 </div>
               ))}

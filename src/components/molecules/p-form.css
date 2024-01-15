@@ -65,7 +65,7 @@ body {
 }
 
 .event-card {
-  width: 30%;
+  width: calc(30% - 32px); /* Adjusted width to fit three cards with 20px gap */
   border: 1px solid #ccc;
   border-radius: 12px;
   padding: 20px;
@@ -80,6 +80,7 @@ body {
   font-size: larger;
   transition: box-shadow 0.3s ease;
 }
+
 
 .event-name {
   font-size: 18px;
@@ -105,7 +106,7 @@ body {
   height: 30px;
   width: 50%;
   border: 1px solid #ccc;
-  background-color: blue;
+  background-color: #ff5733;
 }
 
 .button-organizer-waiting {

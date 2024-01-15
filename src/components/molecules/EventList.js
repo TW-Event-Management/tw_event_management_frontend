@@ -92,6 +92,8 @@ const EventModal = ({ selectedEvent, onClose }) => {
         setIsAttending(true);
         // Store the attendance status in localStorage for the selectedEvent
         localStorage.setItem(`isAttending_${selectedEvent._id}`, 'true');
+
+        window.location.reload();
       }
 
     } catch (error) {
@@ -114,7 +116,11 @@ const EventModal = ({ selectedEvent, onClose }) => {
             minute: 'numeric',
           })}</p>
           <p className="event-info">Location: {selectedEvent.location.locName}</p>
-          <p className="event-description">{selectedEvent.description}</p>
+          <p className="event-info">Organizer: {selectedEvent.organizer}</p>
+          <p className="event-info">Category: {selectedEvent.category}</p>
+          <br />
+          <br />
+          <p className="event-description">Details:<br />{selectedEvent.description}</p>
         </div>
         <div className="modal-footer">
           {isAttending ? (

@@ -84,7 +84,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9); /* Darker background color */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,8 +92,8 @@
 }
 
 .event-modal {
-  background: #fff;
-  color: #333;
+  background: #333; /* Dark background color */
+  color: #fff; /* White text color */
   padding: 20px;
   border-radius: 10px;
   max-width: 90%; /* Adjust the width as needed */
@@ -117,6 +117,7 @@
   margin: 0;
   flex-grow: 1; /* Allow the event name to take up all available space */
   text-align: center;
+  color: #ff5733; /* Keep the event name color */
 }
 
 .modal-footer {
@@ -131,8 +132,8 @@
   font-size: 16px;
   color: #fff;
   cursor: pointer;
-  border-radius: 5px; /* Add some border radius for a softer look */
-  padding: 10px 20px; /* Add padding for better appearance */
+  border-radius: 5px;
+  padding: 10px 20px;
   background-color: #000;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s, color 0.3s;
@@ -148,15 +149,15 @@
   font-size: 16px;
   color: #fff;
   cursor: pointer;
-  border-radius: 5px; /* Add some border radius for a softer look */
-  padding: 10px 20px; /* Add padding for better appearance */
-  background-color: green;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background-color: #ff5733; /* Different color for the Attend button */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s, color 0.3s;
 }
 
 .participate-button:hover {
-  color: #ff5733;
+  color: black;
 }
 
 .event-modal h2 {
